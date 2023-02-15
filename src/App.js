@@ -54,7 +54,7 @@ function App() {
   return (
     winner ? <Winner winner={winner} background={background} prefix={prefix} suffix={suffix} color={color}/> : 
     <Flex align="center" justify="center" sx={{height: '100vh', width: '100vw'}}>
-      <Center miw={500} mih={500} maw="80vw">
+      <Center maw="80vw">
         {items.length === 0 ? (
           <Stack>
             <Title order={1}>Configure o sorteio</Title>

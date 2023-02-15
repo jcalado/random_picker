@@ -42,7 +42,6 @@ function Configuration(props) {
           withAsterisk
           autosize
           maxRows={10}
-          miw={500}
           {...form.getInputProps("itens")}
         />
         <Group spacing={"lg"}>
