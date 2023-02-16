@@ -1,4 +1,5 @@
 import {
+  Checkbox,
   ColorInput,
   Textarea,
   TextInput,
@@ -6,10 +7,15 @@ import {
   Stack,
   Button,
   Group,
+  SimpleGrid,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
+import { IconDeviceFloppy } from "@tabler/icons-react";
+import { useState } from "react";
 
 function Configuration(props) {
+  const [state, setState] = useState({ urlInfo: false });
+
   const form = useForm({
     initialValues: {
       itens: "",
@@ -19,6 +25,7 @@ function Configuration(props) {
       color: "#000000",
       background: "",
       button_label: "Sortear",
+      duration: 5,
     },
 
     // validate: {
@@ -41,10 +48,11 @@ function Configuration(props) {
           label="Itens"
           withAsterisk
           autosize
+          npm
           maxRows={10}
           {...form.getInputProps("itens")}
         />
-        <Group spacing={"lg"}>
+        <SimpleGrid cols={4}>
           <TextInput
             label="Prefixo"
             placeholder="Pode usar emojis como 🎉"
@@ -69,11 +77,11 @@ function Configuration(props) {
             withAsterisk
             {...form.getInputProps("button_label")}
           />
-        </Group>
-        <Group spacing={"lg"}>
+        </SimpleGrid>
+        <SimpleGrid cols={4}>
           <TextInput
             label="Fundo"
-            placeholder="URLs, CSS, #HEX"
+            placeholder="URL da imagem"
             {...form.getInputProps("background")}
           />
           <ColorInput
@@ -81,9 +89,17 @@ function Configuration(props) {
             placeholder=""
             {...form.getInputProps("color")}
           />
-        </Group>
+          <NumberInput
+            value={props.duration}
+            placeholder="Em segundos"
+            label="Duração do sorteio"
+            withAsterisk
+            {...form.getInputProps("duration")}
+          />
+          <Checkbox label="Celebrar! 🎊" {...form.getInputProps('celebrate', { type: 'checkbox' })} />
+        </SimpleGrid>
         <Group position="center" mt="xl">
-          <Button type="submit" color="blue">
+          <Button type="submit" color="blue" leftIcon={<IconDeviceFloppy />}>
             Guardar
           </Button>
         </Group>

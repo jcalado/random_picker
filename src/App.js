@@ -1,4 +1,4 @@
-import { Alert, Button, Center, Flex, Group, Paper, Stack, Title } from "@mantine/core";
+import { Alert, Button, Center, Flex, Group, Stack, Title } from "@mantine/core";
 import { useEffect, useState } from "react";
 import "./App.css";
 import Configuration from "./components/Configuration";
@@ -10,9 +10,11 @@ function App() {
   const [prefix, setPrefix] = useState();
   const [suffix, setSuffix] = useState();
   const [amount, setAmount] = useState(1);
+  const [duration, setDuration] = useState(5);
   const [buttonLabel, setButtonLabel] = useState("Sortear");
   const [background, setBackground] = useState("");
   const [color, setColor] = useState("");
+  const [celebrate, setCelebrate] = useState(false);
 
 
 
@@ -34,13 +36,13 @@ function App() {
     setButtonLabel(values.button_label);
     setColor(values.color);
     setBackground(values.background);
+    setDuration(values.duration);
+    setCelebrate(values.celebrate);
   };
 
   const _handleKeyDown = (event) => {
     console.log(event);
-    if (event.keyCode === 32) {
-      console.log(items);
-      console.log(`Escolher ${amount} vencedores`);
+    if (event.keyCode === 32 && items.length > 0) {
       pickWinner(items);
     }
   };
@@ -52,12 +54,12 @@ function App() {
   };
 
   return (
-    winner ? <Winner winner={winner} background={background} prefix={prefix} suffix={suffix} color={color}/> : 
-    <Flex align="center" justify="center" sx={{height: '100vh', width: '100vw'}}>
+    winner ? <Winner winner={winner} background={background} prefix={prefix} suffix={suffix} color={color} duration={duration} celebrate={celebrate}/> : 
+    <Flex align="center" justify="center" sx={{height: '100vh', width: '100vw', background: `url(${background})`, backgroundSize: 'cover'}}>
       <Center maw="80vw">
         {items.length === 0 ? (
           <Stack>
-            <Title order={1}>Configure o sorteio</Title>
+            <Title order={1}>Sorteio 🎲</Title>
           <Configuration
             items={items}
             winner={winner}
