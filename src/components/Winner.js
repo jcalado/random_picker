@@ -5,24 +5,30 @@ import hourglassAnimation from "../hourglass.json";
 import confettiAnimation from "../confetti.json";
 
 function Winner(props) {
-
-  const [ready, setReady] = useState(false)
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    
-    setTimeout(()=> setReady(true), props.duration * 1000)
+    setTimeout(() => setReady(true), props.duration * 1000);
+  }, [ready, props.duration]);
 
-  }, [ready, props.duration])
-  
-
-  return (
-    ready ?
+  return ready ? (
     <Flex
-      sx={{ height: "100vh", width: "100vw", background: `url(${props.background})`, backgroundSize: 'cover' }}
+      sx={{
+        height: "100vh",
+        width: "100vw",
+        background: `url(${props.background})`,
+        backgroundSize: "cover",
+      }}
       align="center"
     >
       <Center sx={{ height: "100vh", width: "100vw" }}>
-      {props.celebrate && <Lottie animationData={confettiAnimation} loop={false} style={{position: "absolute"}} /> }
+        {props.celebrate && (
+          <Lottie
+            animationData={confettiAnimation}
+            loop={false}
+            style={{ position: "absolute" }}
+          />
+        )}
         {props.winner.map((item, i) => (
           <Title
             color={props.color}
@@ -33,6 +39,7 @@ function Winner(props) {
               fontSize: "8vh",
               maxWidth: "80vw",
               margin: "0 auto",
+              textShadow: "0px 0px 20px rgba(0,0,0,0.3)",
             }}
           >
             {props.prefix}
@@ -41,7 +48,31 @@ function Winner(props) {
           </Title>
         ))}
       </Center>
-    </Flex> : <Lottie animationData={hourglassAnimation} loop={true} style={{ height: "100vh", width: "100vw", background: `url(${props.background})`, backgroundSize: 'cover', overflow: 'hidden' }} />
+    </Flex>
+  ) : (
+    <div
+      style={{
+        background: `url(${props.background})`,
+        backgroundSize: "cover",
+        overflow: "hidden",
+        width: "100vw",
+        height: "100vh",
+      }}
+    >
+      <Lottie
+        animationData={hourglassAnimation}
+        loop={true}
+        style={{
+          height: `${props.loaderSize}%`,
+          width: `${props.loaderSize}%`,
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          overflow: "hidden",
+        }}
+      />
+    </div>
   );
 }
 
